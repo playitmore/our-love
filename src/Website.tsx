@@ -73,7 +73,7 @@ export function Website() {
             <p className="eyebrow light">Little moments, big memories</p>
             <h2>My favorite view is us.</h2>
           </div>
-          <p>Replace these sample files inside <strong>src/images</strong>.</p>
+          <p>Every photo holds a little piece of our story.</p>
         </div>
 
         <div className="photo-grid">
