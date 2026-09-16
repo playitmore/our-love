@@ -52,6 +52,7 @@ export function Website() {
     '--cream': content.colors.cream,
     '--blush': content.colors.blush,
     '--ink': content.colors.ink,
+    '--gold': content.colors.gold,
   } as React.CSSProperties;
 
   return (

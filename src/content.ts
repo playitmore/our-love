@@ -23,10 +23,11 @@ export const content = {
   letterClosing:
     'Whatever comes next, I hope we meet it the way we have met everything else — side by side.',
   colors: {
-    wine: '#6f2f3d',
-    cream: '#fff8ef',
-    blush: '#efd5d0',
-    ink: '#2d2022',
+    wine: '#183c32',
+    cream: '#f8f2e7',
+    blush: '#d9e4da',
+    ink: '#1d302a',
+    gold: '#efc976',
   },
   photos: [
     { src: imageUrl(heroPhoto), alt: 'A couple sharing a quiet moment' },
