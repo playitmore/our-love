@@ -299,20 +299,25 @@ h2 {
   width: min(100%, 1200px);
   margin: 0 auto;
   display: grid;
-  gap: 82px;
+  gap: 28px;
 }
 
 .album-card {
-  padding-top: 28px;
   border-top: 1px solid #d9c4c0;
 }
 
 .album-card-heading {
-  margin-bottom: 28px;
+  padding: 28px 0;
   display: flex;
   align-items: end;
   justify-content: space-between;
   gap: 24px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.album-card-heading::-webkit-details-marker {
+  display: none;
 }
 
 .album-number {
@@ -334,12 +339,50 @@ h2 {
 }
 
 .album-count {
-  margin-bottom: 6px;
+  margin-bottom: 0;
   color: #8b7478;
   font-size: 13px;
 }
 
+.album-summary-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.album-toggle {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border: 1px solid #cbb4b0;
+  border-radius: 50%;
+}
+
+.album-toggle::before,
+.album-toggle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--wine);
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.album-toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform 180ms ease;
+}
+
+.album-card[open] .album-toggle::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
 .album-grid {
+  padding: 4px 0 36px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 16px;
@@ -434,15 +477,18 @@ footer span { margin: 0 8px; }
   .photo-grid { grid-template-columns: 1fr; }
   .memory-photo { min-height: 360px; }
   .photo-2 { transform: none; }
-  .album-heading, .album-card-heading { display: block; }
+  .album-heading { display: block; }
   .album-heading > p { margin-top: 24px; }
-  .album-count { margin-top: 12px; }
+  .album-card-heading { align-items: center; }
   .album-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .album-photo { min-height: 180px; }
   footer { flex-direction: column; text-align: center; }
 }
 
 @media (max-width: 520px) {
+  .album-card h3 { font-size: 30px; }
+  .album-summary-meta { gap: 10px; }
+  .album-count { display: none; }
   .album-grid { grid-template-columns: 1fr; }
   .album-photo { min-height: 260px; }
 }

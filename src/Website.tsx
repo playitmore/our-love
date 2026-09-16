@@ -95,23 +95,26 @@ export function Website() {
             <p className="eyebrow">Our memories, collected</p>
             <h2>Albums we can keep adding to.</h2>
           </div>
-          <p>More days, more stories, more little moments worth keeping.</p>
+          <p>Choose an album to open it. More days, more stories, more moments worth keeping.</p>
         </div>
 
         <div className="album-list">
           {albums.map((album, albumIndex) => (
-            <article className="album-card" key={album.title}>
-              <header className="album-card-heading">
+            <details className="album-card" key={album.title} open={albumIndex === 0}>
+              <summary className="album-card-heading">
                 <div>
                   <p className="album-number">
                     Album {String(albumIndex + 1).padStart(2, '0')}
                   </p>
                   <h3>{album.title}</h3>
                 </div>
-                <p className="album-count">
-                  {album.photos.length} {album.photos.length === 1 ? 'photo' : 'photos'}
-                </p>
-              </header>
+                <div className="album-summary-meta">
+                  <p className="album-count">
+                    {album.photos.length} {album.photos.length === 1 ? 'photo' : 'photos'}
+                  </p>
+                  <span className="album-toggle" aria-hidden="true" />
+                </div>
+              </summary>
 
               <div className="album-grid">
                 {album.photos.map((photo, photoIndex) => (
@@ -124,7 +127,7 @@ export function Website() {
                   </figure>
                 ))}
               </div>
-            </article>
+            </details>
           ))}
         </div>
       </section>
