@@ -1,9 +1,51 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { content } from './content';
-import { albums } from './albums';
+import { albums, type AlbumPhoto } from './albums';
+
+type AlbumPhotoButtonProps = {
+  photo: AlbumPhoto;
+  loading: 'eager' | 'lazy';
+  onOpen: (photo: AlbumPhoto) => void;
+};
+
+function AlbumPhotoButton({ photo, loading, onOpen }: AlbumPhotoButtonProps) {
+  return (
+    <button
+      className="album-photo"
+      type="button"
+      onClick={() => onOpen(photo)}
+      aria-label={`Open a larger preview of ${photo.alt}`}
+    >
+      <img src={photo.src} alt={photo.alt} loading={loading} />
+    </button>
+  );
+}
 
 // This file contains the visible website.
 // Each <section> below is one part of the page.
 export function Website() {
+  const [selectedPhoto, setSelectedPhoto] = useState<AlbumPhoto | null>(null);
+
+  // Close the large preview with Escape and stop the page scrolling behind it.
+  useEffect(() => {
+    if (!selectedPhoto) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeWithEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelectedPhoto(null);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeWithEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeWithEscape);
+    };
+  }, [selectedPhoto]);
+
   // The colors in content.ts become CSS variables used by styles.css.
   const theme = {
     '--wine': content.colors.wine,
@@ -119,13 +161,12 @@ export function Website() {
 
                 <div className="album-preview-grid">
                   {previewPhotos.map((photo, photoIndex) => (
-                    <figure className="album-photo" key={`${album.title}-${photo.src}`}>
-                      <img
-                        src={photo.src}
-                        alt={photo.alt}
-                        loading={albumIndex === 0 && photoIndex < 2 ? 'eager' : 'lazy'}
-                      />
-                    </figure>
+                    <AlbumPhotoButton
+                      key={`${album.title}-${photo.src}`}
+                      photo={photo}
+                      loading={albumIndex === 0 && photoIndex < 2 ? 'eager' : 'lazy'}
+                      onOpen={setSelectedPhoto}
+                    />
                   ))}
                 </div>
 
@@ -142,9 +183,12 @@ export function Website() {
 
                     <div className="album-grid">
                       {remainingPhotos.map((photo) => (
-                        <figure className="album-photo" key={`${album.title}-${photo.src}`}>
-                          <img src={photo.src} alt={photo.alt} loading="lazy" />
-                        </figure>
+                        <AlbumPhotoButton
+                          key={`${album.title}-${photo.src}`}
+                          photo={photo}
+                          loading="lazy"
+                          onOpen={setSelectedPhoto}
+                        />
                       ))}
                     </div>
                   </details>
@@ -179,6 +223,28 @@ export function Website() {
         <p>{content.yourName} <span>♥</span> {content.partnerName}</p>
         <a href="#top">Back to the beginning ↑</a>
       </footer>
+
+      {selectedPhoto && (
+        <div
+          className="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Large photo preview"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <button
+            className="lightbox-close"
+            type="button"
+            onClick={() => setSelectedPhoto(null)}
+            autoFocus
+          >
+            Close
+          </button>
+          <div className="lightbox-picture" onClick={(event) => event.stopPropagation()}>
+            <img src={selectedPhoto.src} alt={selectedPhoto.alt} />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
