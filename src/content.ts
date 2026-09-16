@@ -1,7 +1,7 @@
-import heroPhoto from './images/hero.jpg';
-import memoryOne from './images/memory-1.jpg';
-import memoryTwo from './images/memory-2.jpg';
-import memoryThree from './images/memory-3.jpg';
+import heroPhoto from './images/Love-01.jpg';
+import memoryOne from './images/Love-02 (3).jpg';
+import memoryTwo from './images/Love-02 (2).jpg';
+import memoryThree from './images/Love-02 (1).jpg';
 
 // Image imports can be a URL string or an object containing the URL.
 // This small helper works with both forms.
@@ -11,9 +11,9 @@ function imageUrl(image: string | { src: string }) {
 
 // EDIT THIS OBJECT to personalize the whole website.
 export const content = {
-  yourName: 'Alex',
-  partnerName: 'Mia',
-  togetherSince: 'September 21, 2023',
+  yourName: 'Arvic',
+  partnerName: 'Kezia',
+  togetherSince: 'January 1, 2022',
   headline: 'Every day is better with you in it.',
   introduction:
     'This little website holds a few of my favorite moments, and one very important promise: I will keep choosing you.',
@@ -35,8 +35,10 @@ export const content = {
   ],
   photoCaptions: ['Us, always', 'The best kind of adventure', 'My favorite place'],
   memories: [
-    { year: '2023', title: 'Where our story began' },
-    { year: '2024', title: 'Our first big adventure' },
-    { year: 'Today', title: 'Still my favorite person' },
+    { year: '2022', title: 'Where our story began' },
+    { year: '2023', title: 'Our first big adventure' },
+    { year: '2024', title: 'Life Starts' },
+    { year: '2025', title: 'Challenge Accepted' },
+    { year: '2026', title: 'Still my favorite person' },
   ],
 };
