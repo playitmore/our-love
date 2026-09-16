@@ -95,40 +95,63 @@ export function Website() {
             <p className="eyebrow">Our memories, collected</p>
             <h2>Albums we can keep adding to.</h2>
           </div>
-          <p>Choose an album to open it. More days, more stories, more moments worth keeping.</p>
+          <p>Each album shows a few favorites. Open the rest whenever you want to see more.</p>
         </div>
 
         <div className="album-list">
-          {albums.map((album, albumIndex) => (
-            <details className="album-card" key={album.title} open={albumIndex === 0}>
-              <summary className="album-card-heading">
-                <div>
-                  <p className="album-number">
-                    Album {String(albumIndex + 1).padStart(2, '0')}
-                  </p>
-                  <h3>{album.title}</h3>
-                </div>
-                <div className="album-summary-meta">
+          {albums.map((album, albumIndex) => {
+            const previewPhotos = album.photos.slice(0, 3);
+            const remainingPhotos = album.photos.slice(3);
+
+            return (
+              <article className="album-card" key={album.title}>
+                <header className="album-card-heading">
+                  <div>
+                    <p className="album-number">
+                      Album {String(albumIndex + 1).padStart(2, '0')}
+                    </p>
+                    <h3>{album.title}</h3>
+                  </div>
                   <p className="album-count">
                     {album.photos.length} {album.photos.length === 1 ? 'photo' : 'photos'}
                   </p>
-                  <span className="album-toggle" aria-hidden="true" />
-                </div>
-              </summary>
+                </header>
 
-              <div className="album-grid">
-                {album.photos.map((photo, photoIndex) => (
-                  <figure className="album-photo" key={`${album.title}-${photo.src}`}>
-                    <img
-                      src={photo.src}
-                      alt={photo.alt}
-                      loading={albumIndex === 0 && photoIndex < 2 ? 'eager' : 'lazy'}
-                    />
-                  </figure>
-                ))}
-              </div>
-            </details>
-          ))}
+                <div className="album-preview-grid">
+                  {previewPhotos.map((photo, photoIndex) => (
+                    <figure className="album-photo" key={`${album.title}-${photo.src}`}>
+                      <img
+                        src={photo.src}
+                        alt={photo.alt}
+                        loading={albumIndex === 0 && photoIndex < 2 ? 'eager' : 'lazy'}
+                      />
+                    </figure>
+                  ))}
+                </div>
+
+                {remainingPhotos.length > 0 && (
+                  <details className="album-more">
+                    <summary className="album-more-toggle">
+                      <span className="album-more-closed">
+                        View {remainingPhotos.length} more{' '}
+                        {remainingPhotos.length === 1 ? 'photo' : 'photos'}
+                      </span>
+                      <span className="album-more-open">Show fewer photos</span>
+                      <span className="album-toggle" aria-hidden="true" />
+                    </summary>
+
+                    <div className="album-grid">
+                      {remainingPhotos.map((photo) => (
+                        <figure className="album-photo" key={`${album.title}-${photo.src}`}>
+                          <img src={photo.src} alt={photo.alt} loading="lazy" />
+                        </figure>
+                      ))}
+                    </div>
+                  </details>
+                )}
+              </article>
+            );
+          })}
         </div>
       </section>
 
