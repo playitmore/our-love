@@ -14,6 +14,7 @@ export const content = {
   yourName: 'Arvic',
   partnerName: 'Kezia',
   togetherSince: 'January 1, 2022',
+  featuredAlbumTitle: 'Our Favorite Memories',
   headline: 'Every day is better with you in it.',
   introduction:
     'This little website holds a few of my favorite moments, and one very important promise: I will keep choosing you.',

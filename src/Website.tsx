@@ -1,4 +1,5 @@
 import { content } from './content';
+import { albums } from './albums';
 
 // This file contains the visible website.
 // Each <section> below is one part of the page.
@@ -22,6 +23,7 @@ export function Website() {
           <div className="nav-links">
             <a href="#story">Our story</a>
             <a href="#photos">Photos</a>
+            <a href="#albums">Albums</a>
             <a href="#letter">My letter</a>
           </div>
         </nav>
@@ -86,7 +88,48 @@ export function Website() {
         </div>
       </section>
 
-      {/* 4. Letter section — <details> opens without extra JavaScript */}
+      {/* 4. Album section — folders inside src/images/albums appear here automatically */}
+      <section className="albums section" id="albums">
+        <div className="album-heading">
+          <div>
+            <p className="eyebrow">Our memories, collected</p>
+            <h2>Albums we can keep adding to.</h2>
+          </div>
+          <p>More days, more stories, more little moments worth keeping.</p>
+        </div>
+
+        <div className="album-list">
+          {albums.map((album, albumIndex) => (
+            <article className="album-card" key={album.title}>
+              <header className="album-card-heading">
+                <div>
+                  <p className="album-number">
+                    Album {String(albumIndex + 1).padStart(2, '0')}
+                  </p>
+                  <h3>{album.title}</h3>
+                </div>
+                <p className="album-count">
+                  {album.photos.length} {album.photos.length === 1 ? 'photo' : 'photos'}
+                </p>
+              </header>
+
+              <div className="album-grid">
+                {album.photos.map((photo, photoIndex) => (
+                  <figure className="album-photo" key={`${album.title}-${photo.src}`}>
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading={albumIndex === 0 && photoIndex < 2 ? 'eager' : 'lazy'}
+                    />
+                  </figure>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. Letter section — <details> opens without extra JavaScript */}
       <section className="letter section" id="letter">
         <div className="letter-intro">
           <p className="eyebrow">One more thing</p>
@@ -105,7 +148,7 @@ export function Website() {
         </details>
       </section>
 
-      {/* 5. Final message */}
+      {/* 6. Final message */}
       <footer>
         <p>{content.yourName} <span>♥</span> {content.partnerName}</p>
         <a href="#top">Back to the beginning ↑</a>
